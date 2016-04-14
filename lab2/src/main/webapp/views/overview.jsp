@@ -1,5 +1,8 @@
 <%@ page import="java.util.*" %>
+<%@ page import="at.ac.tuwien.big.we16.ue2.Product" %>
+<%@ page import="at.ac.tuwien.big.we16.ue2.productdata.JSONDataLoader" %>
 <%@ page contentType="text/html" %>
+<jsp:useBean id="user" class="at.ac.tuwien.big.we16.ue2.User" scope="session"/>
 <!doctype html>
 <html lang="de">
 <head>
@@ -33,37 +36,41 @@
             <h2 class="accessibility" id="userinfoheadline">Benutzerdaten</h2>
             <dl class="user-data properties">
                 <dt class="accessibility">Name:</dt>
-                <dd class="user-name">John Doe</dd>
+                <dd class="user-name"><%= user.getUsername() %></dd>
                 <dt>Kontostand:</dt>
                 <dd>
-                    <span class="balance">1.500,00 €</span>
+                    <span class="balance"><%= user.getBudget() %></span>
                 </dd>
                 <dt>Laufend:</dt>
                 <dd>
-                    <span class="running-auctions-count">0</span>
+                    <span class="running-auctions-count"><%= user.getRunningAuctions() %></span>
                     <span class="auction-label" data-plural="Auktionen" data-singular="Auktion">Auktionen</span>
                 </dd>
                 <dt>Gewonnen:</dt>
                 <dd>
-                    <span class="won-auctions-count">0</span>
+                    <span class="won-auctions-count"><%= user.getWonAuctions() %></span>
                     <span class="auction-label" data-plural="Auktionen" data-singular="Auktion">Auktionen</span>
                 </dd>
                 <dt>Verloren:</dt>
                 <dd>
-                    <span class="lost-auctions-count">0</span>
+                    <span class="lost-auctions-count"><%= user.getLostAuctions() %></span>
                     <span class="auction-label" data-plural="Auktionen" data-singular="Auktion">Auktionen</span>
                 </dd>
             </dl>
         </div>
         <div class="recently-viewed-container">
             <h3 class="recently-viewed-headline">Zuletzt angesehen</h3>
-            <ul class="recently-viewed-list"></ul>
+            <ul class="recently-viewed-list">
+                <% for (Product p : user.getLastSeen()) { %>
+                <li><%= p.getName() %></li>
+                <% } %>
+            </ul>
         </div>
     </aside>
     <main aria-labelledby="productsheadline">
         <h2 class="main-headline" id="productsheadline">Produkte</h2>
         <div class="products">
-            <div class="product-outer" data-product-id="a066195f-590e-4d4d-bb70-961996b41314">
+        <div class="product-outer" data-product-id="a066195f-590e-4d4d-bb70-961996b41314">
                 <a href="" class="product expired "
                    title="Mehr Informationen zu Forty Licks">
                     <img class="product-image" src="../images/rolling_stones.png" alt="">
