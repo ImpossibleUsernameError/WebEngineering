@@ -1,3 +1,5 @@
+<%@ page import="java.util.*" %>
+<%@ page contentType="text/html" %>
 <!doctype html>
 <html lang="de">
 <head>
