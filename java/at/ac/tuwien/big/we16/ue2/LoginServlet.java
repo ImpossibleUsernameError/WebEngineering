@@ -15,7 +15,7 @@ import java.util.List;
  */
 public class LoginServlet extends HttpServlet {
 
-    private static final long serialVersionUID = 1L;
+    //private static final long serialVersionUID = 1L;
     private Userpool userpool;
 
     @Override
@@ -29,10 +29,12 @@ public class LoginServlet extends HttpServlet {
             throws ServletException, IOException {
 
         HttpSession session = request.getSession(true);
-        User user =(User)session.getAttribute("user");
+        //User user =(User)session.getAttribute("user");
+        System.out.println(request.getParameter("email"));
+        User user = userpool.getUser(request.getParameter("email"));
         boolean newuser = false;
-        if(!userpool.getUserPool().contains(user)) { //user == null
-            user = new User();
+        if(user != null) { //user == null
+            /*user = new User();
             newuser = true;
             user.setEmail(request.getParameter("email"));
             user.setBudget(1500);
@@ -40,7 +42,7 @@ public class LoginServlet extends HttpServlet {
             user.setRunningAuctions(0);
             user.setWonAuctions(0);
             user.setUsername("so ein scheissdreck");
-        } else {
+        } else {*/
             user = userpool.getUser(user.getEmail());
         }
         //user.setUsername("So ein Scheissdreck");

@@ -1,9 +1,13 @@
 <%@ page import="java.util.*" %>
 <%@ page import="at.ac.tuwien.big.we16.ue2.Product" %>
-<%@ page import="at.ac.tuwien.big.we16.ue2.productdata.JSONDataLoader" %>
+<%@ page import="at.ac.tuwien.big.we16.ue2.ProductPool" %>
+<%@ page import="java.time.LocalDate" %>
+<%@ page import="java.time.LocalTime" %>
+<%@ page import="java.time.LocalDateTime" %>
 <%@ page contentType="text/html" %>
 <jsp:useBean id="user" class="at.ac.tuwien.big.we16.ue2.User" scope="session"/>
-<!doctype html>
+<% ProductPool pool = new ProductPool(); %>
+!doctype html>
 <html lang="de">
 <head>
     <meta charset="utf-8">
@@ -67,28 +71,41 @@
             </ul>
         </div>
     </aside>
+
+    <!-- The following part shows products dynamically, it iterates through all products and creates a field for them -->
+
     <main aria-labelledby="productsheadline">
         <h2 class="main-headline" id="productsheadline">Produkte</h2>
         <div class="products">
-        <div class="product-outer" data-product-id="a066195f-590e-4d4d-bb70-961996b41314">
-                <a href="" class="product expired "
-                   title="Mehr Informationen zu Forty Licks">
-                    <img class="product-image" src="../images/rolling_stones.png" alt="">
+            <% for(Product p : pool.getProducts()) { %>
+        <div class="product-outer" data-product-id=<%= p.getId() %>>
+                <a href="" <% if (!p.getExpiredTime().isAfter(LocalDateTime.now())) { %>
+                   class="product expired "
+                   <% } %>
+                   title="Mehr Informationen zu <%= p.getName() %>">
+                    <img class="product-image" src="../images/<%= p.getImg() %>" alt="<%= p.getName() %>">
                     <dl class="product-properties properties">
                         <dt>Bezeichnung</dt>
-                        <dd class="product-name">Forty_Licks</dd>
+                        <dd class="product-name"><%= p.getName() %></dd>
                         <dt>Preis</dt>
                         <dd class="product-price">
-                            63,61 €
+                            <%= p.getPrice() %>
                         </dd>
                         <dt>Verbleibende Zeit</dt>
-                        <dd data-end-time="2016,03,14,14,30,23,288" data-end-text="abgelaufen"
+                        <dd data-end-time="<%= p.getFormattedEndtime() %>"
+                                <% if (!p.getExpiredTime().isAfter(LocalDateTime.now())) { %>
+                            data-end-text="abgelaufen"
+                            <% } else { %>
+                                data-end-text=""
+                            <% } %>
                             class="product-time js-time-left"></dd>
                         <dt>Höchstbietende/r</dt>
-                        <dd class="product-highest">Jane Doe</dd>
+                        <dd class="product-highest"><%= p.getMaxBidUser() %></dd>
                     </dl>
                 </a>
             </div>
+            <% } %>
+            <!--
             <div class="product-outer" data-product-id="fdf093a5-6ee2-48a0-b10f-21ec2735abe0">
                 <a href="" class="product expired "
                    title="Mehr Informationen zu The Martian">
@@ -240,7 +257,7 @@
                         <dd class="product-highest">Jane Doe</dd>
                     </dl>
                 </a>
-            </div>
+            </div> -->
 
         </div>
     </main>

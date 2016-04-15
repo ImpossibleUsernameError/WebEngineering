@@ -2,32 +2,39 @@ package at.ac.tuwien.big.we16.ue2;
 
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Created by Michael on 14.04.2016.
  */
 public class Userpool {
 
-	private LinkedList<User> userpool = new LinkedList<>();
+	private List<User> userpool = new LinkedList<>();
 
-	//public Userpool() {
-	//	userpool.add(new User("John Doe", "johnnyboy@gmx.at"));
-	//}
+	public Userpool() {
+		User user = new User();
+		user.setEmail("johnnyboy@gmail.com");
+		user.setUsername("John Doe");
+		user.setBudget(1500);
+		user.setRunningAuctions(0);
+		user.setWonAuctions(0);
+		user.setLostAuctions(0);
+		userpool.add(user);
+	}
 
-	public LinkedList<User> getUserPool(){
+	public List<User> getUserPool(){
 		return userpool;
 	}
 
 	public User getUser(String email){
 		Iterator<User> it = userpool.iterator();
-		User user = null;
 
 		while(it.hasNext()){
-			user = it.next();
+			User user = it.next();
 			if(user.getEmail().equals(email)){
-				break;
+				return user;
 			}
 		}
-		return user;
+		return null;
 	}
 }

@@ -1,24 +1,49 @@
 package at.ac.tuwien.big.we16.ue2;
-
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  * Created by Michael on 14.04.2016.
  */
 public class Product {
 
-	private int id;
-	private String name;
-	private double price;
-	private String maxBidUser;
-	private LocalDate expiredDate;
-	private boolean expired;
+	private String id = "";
+	private String name = "";
+	private String img = "";
+	private double price = -1;
+	private String maxBidUser = "";
+	private LocalDateTime expiredTime = null;
+	private boolean expired = true;
+	private String category = "";
 
-	public int getId() {
+	public String getCategory() {
+		return category;
+	}
+
+	public LocalDateTime getExpiredTime() {
+		return expiredTime;
+	}
+
+	public void setExpiredTime(LocalDateTime expiredTime) {
+		this.expiredTime = expiredTime;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
+	public String getImg() {
+		return img;
+	}
+
+	public void setImg(String img) {
+		this.img = img;
+	}
+
+	public String getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -45,15 +70,7 @@ public class Product {
 	public void setMaxBidUser(String maxBidUser) {
 		this.maxBidUser = maxBidUser;
 	}
-
-	public LocalDate getExpiredDate() {
-		return expiredDate;
-	}
-
-	public void setExpiredDate(LocalDate expiredDate) {
-		this.expiredDate = expiredDate;
-	}
-
+	
 	public boolean isExpired() {
 		return expired;
 	}
@@ -61,4 +78,15 @@ public class Product {
 	public void setExpired(boolean expired) {
 		this.expired = expired;
 	}
+
+	@Override
+	public String toString() {
+		return id + ", " + name + ", " + category + ", " + price + ", " + maxBidUser + ", " + expiredTime + ", " + expiredTime;
+	}
+
+	public String getFormattedEndtime(){
+		return expiredTime.getYear() + "," + expiredTime.getMonthValue() + "," + expiredTime.getDayOfMonth() + "," + expiredTime.getHour() + "," +
+				expiredTime.getMinute() + "," + expiredTime.getSecond() + "," + expiredTime.getNano()/1000000;
+	}
+	
 }

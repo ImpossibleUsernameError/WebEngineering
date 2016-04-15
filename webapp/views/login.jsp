@@ -1,5 +1,7 @@
 <%@ page contentType="text/html" %>
 <%@ page session="true" %>
+<jsp:useBean id="user" class="at.ac.tuwien.big.we16.ue2.User" scope="session" />
+<jsp:setProperty name="user" property="*"/>
 <!doctype html>
 <html lang="de">
 <head>

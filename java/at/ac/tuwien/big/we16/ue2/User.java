@@ -77,4 +77,18 @@ public class User {
 		return lastSeen;
 	}
 
+	public boolean equals(Object other){
+		return other.getClass() == this.getClass() && ((User)other).getEmail().equals(getEmail());
+	}
+
+	public int hashCode(){
+		int hc = 99;
+		int multiplier = 1037;
+		return multiplier * (email.hashCode() + hc);
+	}
+
+	public String toString(){
+		return email;
+	}
+
 }
