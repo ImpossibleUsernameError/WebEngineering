@@ -80,4 +80,8 @@ public class LoginServlet extends HttpServlet {
         dispatcher.forward(request, response);
     }
 
+    public Userpool getUserpool(){
+        return userpool;
+    }
+
 }

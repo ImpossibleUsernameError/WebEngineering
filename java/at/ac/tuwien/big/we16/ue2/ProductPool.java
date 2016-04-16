@@ -31,7 +31,6 @@ public class ProductPool {
 			p.setId(m.getId());
 			p.setName(m.getAlbum_name());
 			p.setImg(m.getImg());
-			p.setPrice(m.getPrice());
 			p.setExpiredTime(LocalDateTime.parse(m.getEnd_time()));
 			if(p.getExpiredTime().isAfter(LocalDateTime.now())){
 				p.setExpired(false);
@@ -49,7 +48,6 @@ public class ProductPool {
 			p.setId(b.getId());
 			p.setName(b.getTitle());
 			p.setImg(b.getImg());
-			p.setPrice(b.getPrice());
 			p.setExpiredTime(LocalDateTime.parse(b.getEnd_time()));
 			if(p.getExpiredTime().isAfter(LocalDateTime.now())){
 				p.setExpired(false);
@@ -67,7 +65,6 @@ public class ProductPool {
 			p.setId(m.getId());
 			p.setName(m.getTitle());
 			p.setImg(m.getImg());
-			p.setPrice(m.getPrice());
 			p.setExpiredTime(LocalDateTime.parse(m.getEnd_time()));
 			if(p.getExpiredTime().isAfter(LocalDateTime.now())){
 				p.setExpired(false);

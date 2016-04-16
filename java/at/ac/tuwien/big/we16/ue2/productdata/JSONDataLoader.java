@@ -72,7 +72,6 @@ public class JSONDataLoader {
         private String artist;
         private String year;
         private String end_time;
-        private double price;
         private String img;
         private String id;
 
@@ -90,14 +89,6 @@ public class JSONDataLoader {
 
         public void setEnd_time(String end_time) {
             this.end_time = end_time;
-        }
-
-        public double getPrice() {
-            return price;
-        }
-
-        public void setPrice(double price) {
-            this.price = price;
         }
 
         public String getAlbum_name() {
@@ -139,7 +130,6 @@ public class JSONDataLoader {
         private String author;
         private String year;
         private String end_time;
-        private double price;
         private String img;
         private String id;
 
@@ -157,14 +147,6 @@ public class JSONDataLoader {
 
         public void setEnd_time(String end_time) {
             this.end_time = end_time;
-        }
-
-        public double getPrice() {
-            return price;
-        }
-
-        public void setPrice(double price) {
-            this.price = price;
         }
 
         public String getTitle() {
@@ -206,7 +188,6 @@ public class JSONDataLoader {
         private String director;
         private String year;
         private String end_time;
-        private double price;
         private String img;
         private String id;
 
@@ -224,14 +205,6 @@ public class JSONDataLoader {
 
         public void setEnd_time(String end_time) {
             this.end_time = end_time;
-        }
-
-        public double getPrice() {
-            return price;
-        }
-
-        public void setPrice(double price) {
-            this.price = price;
         }
 
         public String getTitle() {

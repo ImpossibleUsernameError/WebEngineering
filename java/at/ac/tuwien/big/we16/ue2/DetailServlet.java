@@ -15,12 +15,13 @@ public class DetailServlet extends HttpServlet {
 
     //private static final long serialVersionUID = 1L;
     private ProductPool productpool;
+    private Userpool userpool;
 
     @Override
     public void init() throws ServletException {
         super.init();
-        productpool=new ProductPool();
-        //userpool = new Userpool();
+        productpool = new ProductPool();
+        userpool = new Userpool();
 
     }
 
@@ -28,13 +29,13 @@ public class DetailServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession(true);
-        System.out.println("product - "+request.getParameter("product"));
-        Product uber=new Product();
+        Product uber = new Product();
         for( Product p : productpool.getProducts()){
             if(p.getId().equals(request.getParameter("product"))){
                 uber=p;
             }
         }
+        User user = userpool.getUser(request.getParameter("user"));
 
         //User user =(User)session.getAttribute("user");
        // System.out.println(request.getParameter("email"));
@@ -79,11 +80,11 @@ public class DetailServlet extends HttpServlet {
         }*/
 
         session.setAttribute("product", uber);
+        session.setAttribute("user", user);
 
         /*if(newuser) {
             userpool.registerUser(user);
         }*/
-        System.out.println("kjaskjksxa");
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/views/details.jsp");
         dispatcher.forward(request, response);
     }

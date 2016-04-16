@@ -9,7 +9,7 @@ public class Product {
 	private String id = "";
 	private String name = "";
 	private String img = "";
-	private double price = -1;
+	private double price = 0;
 	private String maxBidUser = "";
 	private LocalDateTime expiredTime = null;
 	private boolean expired = true;

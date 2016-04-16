@@ -78,10 +78,10 @@
         <div class="products">
             <% for(Product p : pool.getProducts()) { %>
         <div class="product-outer" data-product-id=<%= p.getId() %>>
-            <form class="form" action="DetailServlet?product=<% p.getId(); System.out.println(p.getId()); %>" method="get">
+            <form class="form" action="DetailServlet?product=<% p.getId(); %>&user=<% user.getEmail(); %>" method="get">
                 <input type="hidden" id="product" name="product" value=<%= p.getId()%>/>
 
-                <a onclick="document.getElementById('form').submit();" href="DetailServlet?product=<%= p.getId()%>"
+                <a onclick="document.getElementById('form').submit();" href="DetailServlet?product=<%= p.getId()%>&user=<%= user.getEmail() %>"
                         <% if (!p.getExpiredTime().isAfter(LocalDateTime.now())) { %>
                    class="product expired"
                         <% } %>
@@ -91,9 +91,15 @@
                     <dt>Bezeichnung</dt>
                     <dd class="product-name"><%= p.getName() %></dd>
                     <dt>Preis</dt>
+                    <% if(p.getPrice() != 0){ %>
                     <dd class="product-price">
                         <%= p.getPrice() %>
                     </dd>
+                    <% } else { %>
+                    <dd style="text-align: center; flex-basis: 100%;">
+                        Noch keine Gebote
+                    </dd>
+                    <% } %>
                     <dt>Verbleibende Zeit</dt>
                     <dd data-end-time="<%= p.getFormattedEndtime() %>"
                             <% if (!p.getExpiredTime().isAfter(LocalDateTime.now())) { %>
