@@ -7,84 +7,45 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.List;
+
+import static java.awt.SystemColor.window;
 
 /**
  * Created by Chrisi on 2016-04-14.
  */
 public class DetailServlet extends HttpServlet {
 
-    //private static final long serialVersionUID = 1L;
     private ProductPool productpool;
-    private Userpool userpool;
 
     @Override
     public void init() throws ServletException {
         super.init();
         productpool = new ProductPool();
-        userpool = new Userpool();
-
     }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession(true);
+
         Product uber = new Product();
         for( Product p : productpool.getProducts()){
             if(p.getId().equals(request.getParameter("product"))){
-                uber=p;
+                uber = p;
             }
         }
-        User user = userpool.getUser(request.getParameter("user"));
 
-        //User user =(User)session.getAttribute("user");
-       // System.out.println(request.getParameter("email"));
-        //System.out.println(request.getAttribute("data-product-id"));
-        //User user = userpool.getUser(request.getParameter("email"));
-        //boolean newuser = false;
-        //if(user != null) { //user == null
-            /*user = new User();
-            newuser = true;
-            user.setEmail(request.getParameter("email"));
-            user.setBudget(1500);
-            user.setLostAuctions(0);
-            user.setRunningAuctions(0);
-            user.setWonAuctions(0);
-            user.setUsername("so ein scheissdreck");
-        } else {*/
-         //   user = userpool.getUser(user.getEmail());
-        //}
-        //user.setUsername("So ein Scheissdreck");
+        User user = (User) session.getAttribute("user");
 
-        /*String[] inter = request.getParameterValues("interests");
-        if(!newuser) {
-            user.clearInterests();
+        List<Product> lastSeen = user.getLastSeen();
+        if(!lastSeen.contains(uber)) {
+            lastSeen.add(uber);
+            user.setLastSeen(lastSeen);
         }
-        if(inter != null ) {
-            List<String> interests = Arrays.asList(inter);
-            if(interests.contains("webEngineering")) {
-                user.addInterest(Interest.WEBENINEERING);
-            }
-            if(interests.contains("modelEngineering")) {
-                user.addInterest(Interest.MODELENGINEERING);
-            }
-            if(interests.contains("semanticWeb")) {
-                user.addInterest(Interest.SEMANTICWEB);
-            }
-            if(interests.contains("objectOrientedModeling")) {
-                user.addInterest(Interest.OBJECTORIENTEDMODELING);
-            }
-            if(interests.contains("businessInformatics")) {
-                user.addInterest(Interest.BUSINESSINFORMATICS);
-            }
-        }*/
 
-        session.setAttribute("product", uber);
-        session.setAttribute("user", user);
+        request.setAttribute("product", uber);
 
-        /*if(newuser) {
-            userpool.registerUser(user);
-        }*/
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/views/details.jsp");
         dispatcher.forward(request, response);
     }

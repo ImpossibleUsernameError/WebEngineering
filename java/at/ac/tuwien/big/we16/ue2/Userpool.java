@@ -9,9 +9,11 @@ import java.util.List;
  */
 public class Userpool {
 
-	private List<User> userpool = new LinkedList<>();
+	private List<User> users;
+	private static Userpool userPool = null;
 
-	public Userpool() {
+	private Userpool() {
+		users = new LinkedList<>();
 		User user = new User();
 		user.setEmail("johnnyboy@gmail.com");
 		user.setUsername("John Doe");
@@ -19,15 +21,23 @@ public class Userpool {
 		user.setRunningAuctions(0);
 		user.setWonAuctions(0);
 		user.setLostAuctions(0);
-		userpool.add(user);
+		users.add(user);
 	}
 
 	public List<User> getUserPool(){
-		return userpool;
+		return users;
 	}
 
+	public static Userpool getInstance(){
+		if(userPool == null){
+			return new Userpool();
+		}
+		return userPool;
+	}
+
+
 	public User getUser(String email){
-		Iterator<User> it = userpool.iterator();
+		Iterator<User> it = users.iterator();
 
 		while(it.hasNext()){
 			User user = it.next();

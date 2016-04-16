@@ -1,12 +1,10 @@
 <%@ page import="at.ac.tuwien.big.we16.ue2.Product" %>
 <%@ page import="java.time.LocalDateTime" %>
 <jsp:useBean id="user" class="at.ac.tuwien.big.we16.ue2.User" scope="session"/>
-<jsp:useBean id="product" class="at.ac.tuwien.big.we16.ue2.Product" scope="session"/>
+<jsp:useBean id="product" class="at.ac.tuwien.big.we16.ue2.Product" scope="request"/>
 <!doctype html>
 <html lang="de">
 <head>
-    <%
-    %>
     <meta charset="utf-8">
     <title>BIG Bid - <%= product.getName() %></title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -60,19 +58,19 @@
             </dl>
         </div>
         <div class="recently-viewed-container">
-            <h3 class="recently-viewed-headline">Zuletzt angesehen</h3>
-            <ul class="recently-viewed-list">
+            <h3>Zuletzt angesehen</h3>
+            <ul>
                 <% for (Product p : user.getLastSeen()) { %>
-                <li><% p.getName(); %></li>
+                    <li class="recently-viewed-link"><a href="DetailServlet?product=<%= p.getId()%>&user=<%= user.getEmail() %>"><%= p.getName() %></a></li>
                 <% } %>
             </ul>
         </div>
     </aside>
     <main aria-labelledby="productheadline" class="details-container">
         <div class="details-image-container">
-            <img class="details-image" src="../images/<%= product.getImg()%>" alt=""> <!--geandert-->
+            <img class="details-image" src="../images/<%= product.getImg()%>" alt="">
         </div>
-        <div data-product-id="<%= product.getId()%>" class="details-data"> <!--geandert-->
+        <div data-product-id="<%= product.getId()%>" class="details-data">
             <h2 class="main-headline" id="productheadline"><%= product.getName()%> (<%= product.getCategory()%>)</h2>
             <% if (!product.getExpiredTime().isAfter(LocalDateTime.now())) { %>
                 <div class="auction-expired-text">
@@ -101,6 +99,12 @@
                     <input type="submit" id="submit-price" class="bid-form-field button" name="submit-price" value="Bieten">
                 </form>
             <% }%>
+
+            <!-- oeffnet overview-Seite -->
+            <form action="BackToOverviewServlet" method="get">
+                <input type="submit" id="backToOverview" class="bid-form-field button" value="zurueck">
+            </form>
+
         </div>
     </main>
 </div>

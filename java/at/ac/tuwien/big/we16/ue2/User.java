@@ -16,14 +16,7 @@ public class User {
 	private String email;
 	private List<Product> lastSeen = new LinkedList<>();
 
-	/*public User(String username, String email){
-		this.username = username;
-		this.email = email;
-		this.budget = 1500;
-		this.runningAuctions = 0;
-		this.wonAuctions = 0;
-		this.lostAuctions = 0;
-	}*/
+
 
 	public String getUsername() {
 		return username;
@@ -75,6 +68,10 @@ public class User {
 
 	public List<Product> getLastSeen() {
 		return lastSeen;
+	}
+
+	public void setLastSeen(List<Product> lastSeen) {
+		this.lastSeen = lastSeen;
 	}
 
 	public boolean equals(Object other){

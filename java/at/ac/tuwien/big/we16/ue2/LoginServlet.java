@@ -15,13 +15,12 @@ import java.util.List;
  */
 public class LoginServlet extends HttpServlet {
 
-    //private static final long serialVersionUID = 1L;
     private Userpool userpool;
 
     @Override
     public void init() throws ServletException {
         super.init();
-        userpool = new Userpool();
+        userpool = Userpool.getInstance();
     }
 
     @Override
@@ -29,59 +28,17 @@ public class LoginServlet extends HttpServlet {
             throws ServletException, IOException {
 
         HttpSession session = request.getSession(true);
-        //User user =(User)session.getAttribute("user");
         System.out.println(request.getParameter("email"));
         User user = userpool.getUser(request.getParameter("email"));
-        boolean newuser = false;
-        if(user != null) { //user == null
-            /*user = new User();
-            newuser = true;
-            user.setEmail(request.getParameter("email"));
-            user.setBudget(1500);
-            user.setLostAuctions(0);
-            user.setRunningAuctions(0);
-            user.setWonAuctions(0);
-            user.setUsername("so ein scheissdreck");
-        } else {*/
+
+        if(user != null) {
             user = userpool.getUser(user.getEmail());
         }
-        //user.setUsername("So ein Scheissdreck");
-
-        /*String[] inter = request.getParameterValues("interests");
-        if(!newuser) {
-            user.clearInterests();
-        }
-        if(inter != null ) {
-            List<String> interests = Arrays.asList(inter);
-            if(interests.contains("webEngineering")) {
-                user.addInterest(Interest.WEBENINEERING);
-            }
-            if(interests.contains("modelEngineering")) {
-                user.addInterest(Interest.MODELENGINEERING);
-            }
-            if(interests.contains("semanticWeb")) {
-                user.addInterest(Interest.SEMANTICWEB);
-            }
-            if(interests.contains("objectOrientedModeling")) {
-                user.addInterest(Interest.OBJECTORIENTEDMODELING);
-            }
-            if(interests.contains("businessInformatics")) {
-                user.addInterest(Interest.BUSINESSINFORMATICS);
-            }
-        }*/
 
         session.setAttribute("user", user);
 
-        /*if(newuser) {
-            userpool.registerUser(user);
-        }*/
 
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/views/overview.jsp");
         dispatcher.forward(request, response);
     }
-
-    public Userpool getUserpool(){
-        return userpool;
-    }
-
 }

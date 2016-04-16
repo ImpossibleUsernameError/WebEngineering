@@ -31,7 +31,7 @@
 </header>
 <div class="main-container">
     <main aria-labelledby="formheadline">
-        <form class="form" action="LoginServlet" method="post">                 // LoginServlet bei post-Aufruf
+        <form class="form" action="LoginServlet" method="post">
             <h2 id="formheadline" class="registration-headline">Anmelden</h2>
             <div class="form-row">
                 <label class="form-label" for="email-input">

@@ -88,5 +88,17 @@ public class Product {
 		return expiredTime.getYear() + "," + expiredTime.getMonthValue() + "," + expiredTime.getDayOfMonth() + "," + expiredTime.getHour() + "," +
 				expiredTime.getMinute() + "," + expiredTime.getSecond() + "," + expiredTime.getNano()/1000000;
 	}
-	
+
+	@Override
+	public boolean equals(Object obj) {
+		if(!obj.getClass().equals(this.getClass())){
+			return false;
+		}
+
+		Product that = (Product) obj;
+		if(that.getId().equals(this.id)){
+			return true;
+		}
+		return false;
+	}
 }
