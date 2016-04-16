@@ -81,7 +81,7 @@
             <form class="form" action="DetailServlet?product=<% p.getId(); System.out.println(p.getId()); %>" method="get">
                 <input type="hidden" id="product" name="product" value=<%= p.getId()%>/>
 
-                <a onclick="document.getElementById('form').submit();" href="\DetailServlet?product=<%= p.getId()%>"
+                <a onclick="document.getElementById('form').submit();" href="DetailServlet?product=<%= p.getId()%>"
                         <% if (!p.getExpiredTime().isAfter(LocalDateTime.now())) { %>
                    class="product expired"
                         <% } %>
