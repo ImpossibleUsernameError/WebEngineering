@@ -7,7 +7,7 @@
 <%@ page contentType="text/html" %>
 <jsp:useBean id="user" class="at.ac.tuwien.big.we16.ue2.User" scope="session"/>
 <% ProductPool pool = new ProductPool(); %>
-!doctype html>
+<!doctype html>
 <html lang="de">
 <head>
     <meta charset="utf-8">
@@ -73,37 +73,42 @@
     </aside>
 
     <!-- The following part shows products dynamically, it iterates through all products and creates a field for them -->
-
     <main aria-labelledby="productsheadline">
         <h2 class="main-headline" id="productsheadline">Produkte</h2>
         <div class="products">
             <% for(Product p : pool.getProducts()) { %>
         <div class="product-outer" data-product-id=<%= p.getId() %>>
-                <a href="" <% if (!p.getExpiredTime().isAfter(LocalDateTime.now())) { %>
-                   class="product expired "
-                   <% } %>
+            <form class="form" action="DetailServlet?product=<% p.getId(); System.out.println(p.getId()); %>" method="get">
+                <input type="hidden" id="product" name="product" value=<%= p.getId()%>/>
+
+                <a onclick="document.getElementById('form').submit();" href="\DetailServlet?product=<%= p.getId()%>"
+                        <% if (!p.getExpiredTime().isAfter(LocalDateTime.now())) { %>
+                   class="product expired"
+                        <% } %>
                    title="Mehr Informationen zu <%= p.getName() %>">
-                    <img class="product-image" src="../images/<%= p.getImg() %>" alt="<%= p.getName() %>">
-                    <dl class="product-properties properties">
-                        <dt>Bezeichnung</dt>
-                        <dd class="product-name"><%= p.getName() %></dd>
-                        <dt>Preis</dt>
-                        <dd class="product-price">
-                            <%= p.getPrice() %>
-                        </dd>
-                        <dt>Verbleibende Zeit</dt>
-                        <dd data-end-time="<%= p.getFormattedEndtime() %>"
-                                <% if (!p.getExpiredTime().isAfter(LocalDateTime.now())) { %>
-                            data-end-text="abgelaufen"
+                <img class="product-image" src="../images/<%= p.getImg() %>" alt="<%= p.getName() %>">
+                <dl class="product-properties properties">
+                    <dt>Bezeichnung</dt>
+                    <dd class="product-name"><%= p.getName() %></dd>
+                    <dt>Preis</dt>
+                    <dd class="product-price">
+                        <%= p.getPrice() %>
+                    </dd>
+                    <dt>Verbleibende Zeit</dt>
+                    <dd data-end-time="<%= p.getFormattedEndtime() %>"
+                            <% if (!p.getExpiredTime().isAfter(LocalDateTime.now())) { %>
+                        data-end-text="abgelaufen"
                             <% } else { %>
-                                data-end-text=""
+                        data-end-text=""
                             <% } %>
-                            class="product-time js-time-left"></dd>
-                        <dt>Höchstbietende/r</dt>
-                        <dd class="product-highest"><%= p.getMaxBidUser() %></dd>
-                    </dl>
+                        class="product-time js-time-left"></dd>
+                    <dt>Höchstbietende /r</dt>
+                    <dd class="product-highest"><%= p.getMaxBidUser() %></dd>
+                </dl>
                 </a>
+            </form>
             </div>
+
             <% } %>
             <!--
             <div class="product-outer" data-product-id="fdf093a5-6ee2-48a0-b10f-21ec2735abe0">
