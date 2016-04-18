@@ -14,14 +14,6 @@ public class Userpool {
 
 	private Userpool() {
 		users = new LinkedList<>();
-		User user = new User();
-		user.setEmail("johnnyboy@gmail.com");
-		user.setUsername("John Doe");
-		user.setBudget(1500);
-		user.setRunningAuctions(0);
-		user.setWonAuctions(0);
-		user.setLostAuctions(0);
-		users.add(user);
 	}
 
 	public List<User> getUserPool(){
@@ -46,5 +38,19 @@ public class Userpool {
 			}
 		}
 		return null;
+	}
+
+	public void addUser(User user){
+		users.add(user);
+	}
+
+	@Override
+	public String toString() {
+		Iterator<User> it = users.iterator();
+		String string = "";
+		while(it.hasNext()){
+			string += it.next() + ", ";
+		}
+		return string;
 	}
 }

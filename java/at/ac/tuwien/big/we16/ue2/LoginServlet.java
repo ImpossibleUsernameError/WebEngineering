@@ -7,8 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
+
 
 /**
  * Created by Chrisi on 2016-04-14.
@@ -28,12 +27,11 @@ public class LoginServlet extends HttpServlet {
             throws ServletException, IOException {
 
         HttpSession session = request.getSession(true);
-        System.out.println(request.getParameter("email"));
-        User user = userpool.getUser(request.getParameter("email"));
 
-        if(user != null) {
-            user = userpool.getUser(user.getEmail());
-        }
+        User user = new User(request.getParameter("email"));
+
+        userpool.addUser(user);
+
 
         session.setAttribute("user", user);
 

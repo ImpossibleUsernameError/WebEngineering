@@ -17,6 +17,19 @@ public class User {
 	private List<Product> lastSeen = new LinkedList<>();
 
 
+	public User(){
+
+	}
+
+
+	public User(String email){
+		this.setEmail(email);
+		this.setUsername("John Doe");
+		this.setBudget(1500);
+		this.setRunningAuctions(0);
+		this.setWonAuctions(0);
+		this.setLostAuctions(0);
+	}
 
 	public String getUsername() {
 		return username;
