@@ -8,13 +8,11 @@ import java.util.List;
  */
 public class User {
 
-	private String username;
 	private double budget;
 	private int runningAuctions;
 	private int wonAuctions;
 	private int lostAuctions;
 	private String email;
-	private List<Product> lastSeen = new LinkedList<>();
 
 
 	public User(){
@@ -24,20 +22,12 @@ public class User {
 
 	public User(String email){
 		this.setEmail(email);
-		this.setUsername("John Doe");
 		this.setBudget(1500);
 		this.setRunningAuctions(0);
 		this.setWonAuctions(0);
 		this.setLostAuctions(0);
 	}
 
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
 
 	public double getBudget() {
 		return budget;
@@ -77,14 +67,6 @@ public class User {
 
 	public void setEmail(String email) {
 		this.email = email;
-	}
-
-	public List<Product> getLastSeen() {
-		return lastSeen;
-	}
-
-	public void setLastSeen(List<Product> lastSeen) {
-		this.lastSeen = lastSeen;
 	}
 
 	public boolean equals(Object other){

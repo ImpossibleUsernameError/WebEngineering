@@ -7,9 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.List;
 
-import static java.awt.SystemColor.window;
 
 /**
  * Created by Chrisi on 2016-04-14.
@@ -36,13 +34,7 @@ public class DetailServlet extends HttpServlet {
             }
         }
 
-        User user = (User) session.getAttribute("user");
 
-        List<Product> lastSeen = user.getLastSeen();
-        if(!lastSeen.contains(uber)) {
-            lastSeen.add(uber);
-            user.setLastSeen(lastSeen);
-        }
 
         request.setAttribute("product", uber);
 

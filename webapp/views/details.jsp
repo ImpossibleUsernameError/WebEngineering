@@ -1,16 +1,37 @@
-<%@ page import="at.ac.tuwien.big.we16.ue2.Product" %>
 <%@ page import="java.time.LocalDateTime" %>
 <jsp:useBean id="user" class="at.ac.tuwien.big.we16.ue2.User" scope="session"/>
 <jsp:useBean id="product" class="at.ac.tuwien.big.we16.ue2.Product" scope="request"/>
-<!doctype html>
+<!DOCTYPE html>
 <html lang="de">
 <head>
     <meta charset="utf-8">
     <title>BIG Bid - <%= product.getName() %></title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="../styles/style.css">
+
+    <script src="/scripts/jquery.js"></script>
+    <script src="/scripts/framework.js"></script>
+    <script src="/scripts/WAScript.js"></script>
+
+
+    <script>
+        $(document).ready(function(){
+            var id = "<%= product.getId()%>";
+            var name = "<%= product.getName() %>";
+            window.sessionStorage.setItem(id, name);
+        });
+
+        $(document).ready(function(){
+            if(!supportsLocalStorage() || sessionStorage.length == 0){
+                document.getElementById("lastSeenHeadlineDetails").className = "recently-viewed-headline";
+            } else{
+                document.getElementById("lastSeenHeadlineDetails").className = "";
+            }
+        })
+    </script>
 </head>
-<body data-decimal-separator="," data-grouping-separator=".">
+
+<body data-decimal-separator="," data-grouping-separator="." onload="printProductOfStorageDetails()">
 
 <a href="#productsheadline" class="accessibility">Zum Inhalt springen</a>
 
@@ -35,7 +56,7 @@
             <h2 class="accessibility" id="userinfoheadline">Benutzerdaten</h2>
             <dl class="user-data properties">
                 <dt class="accessibility">Name:</dt>
-                <dd class="user-name"><%= user.getUsername() %></dd>
+                <dd class="user-name"><%= user.getEmail() %></dd>
                 <dt>Kontostand:</dt>
                 <dd>
                     <span class="balance"><%= user.getBudget() %> &#8364</span>
@@ -58,15 +79,13 @@
             </dl>
         </div>
         <div class="recently-viewed-container">
-            <h3>Zuletzt angesehen</h3>
-            <ul>
-                <% for (Product p : user.getLastSeen()) { %>
-                    <li class="recently-viewed-link"><a href="DetailServlet?product=<%= p.getId()%>&user=<%= user.getEmail() %>"><%= p.getName() %></a></li>
-                <% } %>
+            <h3 id="lastSeenDetailsHeadline">Zuletzt angesehen</h3>
+            <ul id="lastSeenListDetails">
             </ul>
         </div>
     </aside>
     <main aria-labelledby="productheadline" class="details-container">
+        <% System.out.println(product);%>
         <div class="details-image-container">
             <img class="details-image" src="../images/<%= product.getImg()%>" alt="">
         </div>
@@ -78,7 +97,9 @@
                         Diese Auktion ist bereits abgelaufen.
                         Das Produkt wurde um
                         <span class="highest-bid"><%=product.getPrice() %> &#8364</span> an
-                        <span class="highest-bidder"><%=product.getMaxBidUser() %></span> verkauft.
+                        <span class="highest-bidder">
+                            <%=product.getMaxBidUser() %>
+                        </span> verkauft.
                     </p>
                 </div>
             <% }else { %>
@@ -100,18 +121,12 @@
                 </form>
             <% }%>
 
-            <!-- oeffnet overview-Seite -->
-            <form action="BackToOverviewServlet" method="get">
-                <input type="submit" id="backToOverview" class="bid-form-field button" value="zurueck">
-            </form>
-
         </div>
     </main>
 </div>
 <footer>
     © 2016 BIG Bid
 </footer>
-<script src="/scripts/jquery.js"></script>
-<script src="/scripts/framework.js"></script>
+
 </body>
 </html>

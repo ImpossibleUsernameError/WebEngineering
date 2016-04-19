@@ -1,6 +1,4 @@
-<%@ page import="at.ac.tuwien.big.we16.ue2.Product" %>
-<%@ page import="at.ac.tuwien.big.we16.ue2.ProductPool" %>
-<%@ page import="java.time.LocalDateTime" %>
+<%@ page import="at.ac.tuwien.big.we16.ue2.Product, at.ac.tuwien.big.we16.ue2.ProductPool, java.time.LocalDateTime" %>
 <%@ page contentType="text/html" %>
 
 <jsp:useBean id="user" class="at.ac.tuwien.big.we16.ue2.User" scope="session"/>
@@ -14,9 +12,23 @@
     <title>BIG Bid - Produkte</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="../styles/style.css">
+    <script src="/scripts/jquery.js"></script>
+    <script src="/scripts/framework.js"></script>
+    <script src="/scripts/WAScript.js"></script>
+
+
+    <script>
+        $(document).ready(function(){
+            if(!supportsLocalStorage() || sessionStorage.length == 0){
+                document.getElementById("lastSeenHeadlineOverview").className = "recently-viewed-headline";
+            } else{
+                document.getElementById("lastSeenHeadlineOverview").className = "";
+            }
+        })
+    </script>
 
 </head>
-<body data-decimal-separator="," data-grouping-separator=".">
+<body data-decimal-separator="," data-grouping-separator="." onload="printProductOfStorageOverview()">
 
 <a href="#productsheadline" class="accessibility">Zum Inhalt springen</a>
 
@@ -41,10 +53,10 @@
             <h2 class="accessibility" id="userinfoheadline">Benutzerdaten</h2>
             <dl class="user-data properties">
                 <dt class="accessibility">Name:</dt>
-                <dd class="user-name"><%= user.getUsername() %></dd>
+                <dd class="user-name"><%= user.getEmail() %></dd>
                 <dt>Kontostand:</dt>
                 <dd>
-                    <span class="balance"><%= user.getBudget() %></span>
+                    <span class="balance"><%= user.getBudget() %> &#8364</span>
                 </dd>
                 <dt>Laufend:</dt>
                 <dd>
@@ -63,14 +75,14 @@
                 </dd>
             </dl>
         </div>
-        <div class="recently-viewed-container">
-            <h3>Zuletzt angesehen</h3>
 
-            <ul>
-                <% for (Product p : user.getLastSeen()) { %>
-                    <li class="recently-viewed-link"><a href="DetailServlet?product=<%= p.getId()%>&user=<%= user.getEmail() %>"><%= p.getName() %></a></li>
-                <% } %>
+
+
+        <div class="recently-viewed-container">
+            <h3 id="lastSeenHeadlineOverview">Zuletzt angesehen</h3>
+            <ul id="lastSeenListOverview">
             </ul>
+
         </div>
     </aside>
 
@@ -80,18 +92,19 @@
         <div class="products">
             <% for(Product p : pool.getProducts()) { %>
                 <div class="product-outer" data-product-id=<%= p.getId() %>>
-                    <form id="form" class="form" action="DetailServlet?product=<% p.getId(); %>&user=<% user.getEmail(); %>" method="get">
+                    <form id="form" class="form" action="DetailServlet?product=<% p.getId(); %>" method="get">
                         <input type="hidden" id="product" name="product" value=<%= p.getId()%>/>
 
-                        <a onclick="document.getElementById('form').submit()" href="DetailServlet?product=<%= p.getId()%>&user=<%= user.getEmail() %>"
+                        <a href="DetailServlet?product=<%= p.getId()%>"
 
                             <% if (!p.getExpiredTime().isAfter(LocalDateTime.now())) { %>
                                 class="product expired"
-                            <% } else if(user.getLastSeen().contains(p)){ %>
+                            <% } else if(p.getMaxBidUser().equals(user.getEmail())){ %>
                                 class="product highlight"
                             <% } %>
 
                             title="Mehr Informationen zu <%= p.getName() %>">
+
                             <img class="product-image" src="../images/<%= p.getImg() %>" alt="<%= p.getName() %>">
                             <dl class="product-properties properties">
                                 <dt>Bezeichnung</dt>
@@ -127,7 +140,6 @@
 <footer>
     © 2016 BIG Bid
 </footer>
-<script src="/scripts/jquery.js"></script>
-<script src="/scripts/framework.js"></script>
+
 </body>
 </html>
