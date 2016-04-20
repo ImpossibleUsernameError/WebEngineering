@@ -8,19 +8,9 @@
     <title>BIG Bid - <%= product.getName() %></title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="../styles/style.css">
-
-    <script src="/scripts/jquery.js"></script>
-    <script src="/scripts/framework.js"></script>
     <script src="/scripts/WAScript.js"></script>
 
-
     <script>
-        $(document).ready(function(){
-            var id = "<%= product.getId()%>";
-            var name = "<%= product.getName() %>";
-            window.sessionStorage.setItem(id, name);
-        });
-
         $(document).ready(function(){
             if(!supportsLocalStorage() || sessionStorage.length == 0){
                 document.getElementById("lastSeenHeadlineDetails").className = "recently-viewed-headline";
@@ -29,6 +19,7 @@
             }
         })
     </script>
+
 </head>
 
 <body data-decimal-separator="," data-grouping-separator="." onload="printProductOfStorageDetails()">
@@ -56,10 +47,10 @@
             <h2 class="accessibility" id="userinfoheadline">Benutzerdaten</h2>
             <dl class="user-data properties">
                 <dt class="accessibility">Name:</dt>
-                <dd class="user-name"><%= user.getEmail() %></dd>
+                <dd id="user-name" class="user-name"><%= user.getEmail() %></dd>
                 <dt>Kontostand:</dt>
                 <dd>
-                    <span class="balance"><%= user.getBudget() %> &#8364</span>
+                    <span class="balance"><%= user.getBudget() %> </span> &#8364
                 </dd>
                 <dt>Laufend:</dt>
                 <dd>
@@ -79,13 +70,12 @@
             </dl>
         </div>
         <div class="recently-viewed-container">
-            <h3 id="lastSeenDetailsHeadline">Zuletzt angesehen</h3>
+            <h3 id="lastSeenHeadlineDetails">Zuletzt angesehen</h3>
             <ul id="lastSeenListDetails">
             </ul>
         </div>
     </aside>
     <main aria-labelledby="productheadline" class="details-container">
-        <% System.out.println(product);%>
         <div class="details-image-container">
             <img class="details-image" src="../images/<%= product.getImg()%>" alt="">
         </div>
@@ -96,7 +86,7 @@
                     <p>
                         Diese Auktion ist bereits abgelaufen.
                         Das Produkt wurde um
-                        <span class="highest-bid"><%=product.getPrice() %> &#8364</span> an
+                        <span class="highest-bid"><%=product.getPrice() %> </span> &#8364 an
                         <span class="highest-bidder">
                             <%=product.getMaxBidUser() %>
                         </span> verkauft.
@@ -108,15 +98,15 @@
                 <p class="detail-time">Restzeit: <span data-end-time="<%=product.getFormattedEndtime()%>"
                                                        class="detail-rest-time js-time-left"></span>
                 </p>
-                <form class="bid-form" method="post" action="">
+                <form id="bid-form" class="bid-form" action="">
                     <label class="bid-form-field" id="highest-price">
-                        <span class="highest-bid"><%=product.getPrice() %> &#8364</span>
+                        <span class="highest-bid"><%=product.getPrice() %> </span> &#8364
                         <span class="highest-bidder"><%=product.getMaxBidUser() %></span>
                     </label>
                     <label class="accessibility" for="new-price"></label>
                     <input type="number" step="0.01" min="0" id="new-price" class="bid-form-field form-input"
                            name="new-price" required>
-                    <p class="bid-error">Es gibt bereits ein höheres Gebot oder der Kontostand ist zu niedrig.</p>
+                    <p class="bid-error">Es gibt bereits ein h&oumlheres Gebot oder der Kontostand ist zu niedrig.</p>
                     <input type="submit" id="submit-price" class="bid-form-field button" name="submit-price" value="Bieten">
                 </form>
             <% }%>
@@ -128,5 +118,46 @@
     © 2016 BIG Bid
 </footer>
 
+<script src="/scripts/jquery.js"></script>
+<script src="/scripts/framework.js"></script>
+<script type="text/javascript">
+    $("#bid-form").submit(function (event) {
+        event.preventDefault();
+        var newPrice = $("#new-price").val();
+        var pid = '${product.id}';
+        $.post("BidServlet", {newP: newPrice, prodId: pid})
+
+                .done(function (data) {
+                    var json = $.parseJSON(data);
+                    runningAuctions = $(".running-auctions-count");
+                    for (var i = 0; i < runningAuctions.length; i++) {
+                        runningAuctions[i].innerHTML = json.runningAuctions;
+                    }
+                    balance = $(".balance");
+                    for (var i = 0; i < runningAuctions.length; i++) {
+                        balance[i].innerHTML = json.newBudget;
+                    }
+                    highestbids = $(".highest-bid");
+                    for (var i = 0; i < highestbids.length; i++) {
+                        highestbids[i].innerHTML = json.newProductPrice;
+                    }
+                    highestbidder = $(".highest-bidder");
+                    for (var i = 0; i < highestbidder.length; i++) {
+                        highestbidder[i].innerHTML = '${user.email}';
+                    }
+                    error = $(".bid-error");
+                    for(var i = 0; i < error.length; i++){
+                        error[i].style.display = "none";
+                    }
+                })
+
+                .fail(function () {
+                    error = $(".bid-error");
+                    for(var i = 0; i < error.length; i++){
+                        error[i].style.display = "block";
+                    }
+                })
+    });
+</script>
 </body>
 </html>

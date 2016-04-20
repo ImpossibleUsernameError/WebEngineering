@@ -12,6 +12,14 @@
         <servlet-name>DetailServlet</servlet-name>
         <servlet-class>at.ac.tuwien.big.we16.ue2.DetailServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>BidServlet</servlet-name>
+        <servlet-class>at.ac.tuwien.big.we16.ue2.BidServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>BidServlet</servlet-name>
+        <url-pattern>/BidServlet</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/LoginServlet</url-pattern>

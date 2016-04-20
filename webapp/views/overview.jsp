@@ -3,31 +3,30 @@
 
 <jsp:useBean id="user" class="at.ac.tuwien.big.we16.ue2.User" scope="session"/>
 
-<% ProductPool pool = new ProductPool(); %>
+<%! ProductPool pool = ProductPool.getInstance(); %>
 
 <!doctype html>
 <html lang="de">
 <head>
     <meta charset="utf-8">
+    <meta name="cache-control" content="no-cache" />
+    <meta name="expires" content="0" />
+    <meta name="pragma" content="no-cache" />
+
     <title>BIG Bid - Produkte</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="../styles/style.css">
-    <script src="/scripts/jquery.js"></script>
-    <script src="/scripts/framework.js"></script>
-    <script src="/scripts/WAScript.js"></script>
-
-
-    <script>
-        $(document).ready(function(){
-            if(!supportsLocalStorage() || sessionStorage.length == 0){
-                document.getElementById("lastSeenHeadlineOverview").className = "recently-viewed-headline";
-            } else{
-                document.getElementById("lastSeenHeadlineOverview").className = "";
-            }
-        })
-    </script>
 
 </head>
+
+<input type="hidden" id="refreshed" value="no">
+<script type="text/javascript">
+    onload=function(){
+        var e=document.getElementById("refreshed");
+        if(e.value=="no")e.value="yes";
+        else{e.value="no";location.reload();}
+    }
+</script>
 <body data-decimal-separator="," data-grouping-separator="." onload="printProductOfStorageOverview()">
 
 <a href="#productsheadline" class="accessibility">Zum Inhalt springen</a>
@@ -112,7 +111,7 @@
                                 <dt>Preis</dt>
                                     <% if(p.getPrice() != 0){ %>
                                         <dd class="product-price">
-                                            <%= p.getPrice() %>
+                                            <%= p.getPrice() %> &#8364
                                         </dd>
                                     <% } else { %>
                                         <dd style="text-align: center; flex-basis: 100%;">
@@ -140,6 +139,19 @@
 <footer>
     © 2016 BIG Bid
 </footer>
+
+<script src="/scripts/jquery.js"></script>
+<script src="/scripts/framework.js"></script>
+<script src="/scripts/WAScript.js"></script>
+<script>
+    $(document).ready(function(){
+        if(!supportsLocalStorage() || sessionStorage.length == 0){
+            document.getElementById("lastSeenHeadlineOverview").className = "recently-viewed-headline";
+        } else{
+            document.getElementById("lastSeenHeadlineOverview").className = "";
+        }
+    })
+</script>
 
 </body>
 </html>

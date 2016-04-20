@@ -19,27 +19,22 @@ public class DetailServlet extends HttpServlet {
     @Override
     public void init() throws ServletException {
         super.init();
-        productpool = new ProductPool();
+        productpool = ProductPool.getInstance();
     }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession(true);
 
-        Product uber = new Product();
-        for( Product p : productpool.getProducts()){
-            if(p.getId().equals(request.getParameter("product"))){
-                uber = p;
-            }
-        }
-
-
+        Product uber = productpool.getProductById(request.getParameter("product"));
 
         request.setAttribute("product", uber);
 
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/views/details.jsp");
+        System.out.println("forward: " + uber);
+
         dispatcher.forward(request, response);
+
     }
 
 }

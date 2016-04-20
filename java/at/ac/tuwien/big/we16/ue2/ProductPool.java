@@ -12,11 +12,19 @@ import java.util.List;
  */
 public class ProductPool {
 
-	private List<Product> products;
+	private static List<Product> products;
+	private static ProductPool pool;
 
-	public ProductPool() {
+	private ProductPool(){
 		products = new LinkedList<>();
 		init();
+	}
+
+	public static ProductPool getInstance(){
+		if(pool == null) {
+			pool = new ProductPool();
+		}
+		return pool;
 	}
 
 	/**
@@ -82,5 +90,14 @@ public class ProductPool {
 
 	public List<Product> getProducts() {
 		return products;
+	}
+
+	public Product getProductById(String id){
+		for(Product p : products){
+			if(p.getId().equals(id)){
+				return p;
+			}
+		}
+		return null;
 	}
 }

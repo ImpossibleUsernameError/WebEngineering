@@ -30,10 +30,10 @@ public class LoginServlet extends HttpServlet {
 
         User user = new User(request.getParameter("email"));
 
-        userpool.addUser(user);
-
-
-        session.setAttribute("user", user);
+        if(userpool.getUser(request.getParameter("email")) == null) {
+            userpool.addUser(user);
+            session.setAttribute("user", user);
+        }
 
 
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/views/overview.jsp");
