@@ -8,27 +8,6 @@
     <title>BIG Bid - <%= product.getName() %></title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="../styles/style.css">
-
-    <script src="/scripts/jquery.js"></script>
-    <script src="/scripts/framework.js"></script>
-    <script src="/scripts/WAScript.js"></script>
-
-    <script>
-        $(document).ready(function(){
-            var id = "<%= product.getId()%>";
-            var name = "<%= product.getName() %>";
-            window.sessionStorage.setItem(id, name);
-        });
-
-        $(document).ready(function(){
-            if(!supportsLocalStorage() || sessionStorage.length == 0){
-                document.getElementById("lastSeenHeadlineDetails").className = "recently-viewed-headline";
-            } else{
-                document.getElementById("lastSeenHeadlineDetails").className = "";
-            }
-        })
-    </script>
-
 </head>
 
 <body data-decimal-separator="," data-grouping-separator="." onload="printProductOfStorageDetails()">
@@ -126,18 +105,45 @@
 <footer>
     © 2016 BIG Bid
 </footer>
-
-
-
+<script src="/scripts/jquery.js"></script>
+<script src="/scripts/framework.js"></script>
+<script src="/scripts/WAScript.js"></script>
 <script type="text/javascript">
+    $(document).ready(function(){
+        var id = "<%= product.getId()%>";
+        var name = "<%= product.getName() %>";
+        window.sessionStorage.setItem(id, name);
+    });
+
+    $(document).ready(function(){
+        if(!supportsLocalStorage() || sessionStorage.length == 0){
+            document.getElementById("lastSeenHeadlineDetails").className = "recently-viewed-headline";
+        } else{
+            document.getElementById("lastSeenHeadlineDetails").className = "";
+        }
+    });
+
+    //Add handler when bid-form is submitted
     $("#bid-form").submit(function (event) {
+        //Stop from submitting normally
         event.preventDefault();
+
+        //Getting the new price and the product id
         var newPrice = $("#new-price").val();
         var pid = '${product.id}';
+
+        //Sending an AJAX post request to BidServlet with values newPrice and pid
         $.post("BidServlet", {newP: newPrice, prodId: pid})
 
+                //If the request was processed successfully and the bid is valid
                 .done(function (data) {
+                    //Get data from response and parse it in json-Object
                     var json = $.parseJSON(data);
+                    /*
+                    For all of the below for-loops the same rule applies: It's possible that there are more than
+                    one field which show the specified value
+                    Therefore we access the class, iterate through all elements with that class and asign the respond value
+                     */
                     runningAuctions = $(".running-auctions-count");
                     for (var i = 0; i < runningAuctions.length; i++) {
                         runningAuctions[i].innerHTML = json.runningAuctions;
@@ -148,7 +154,7 @@
                     }
                     highestbids = $(".highest-bid");
                     for (var i = 0; i < highestbids.length; i++) {
-                        highestbids[i].innerHTML = json.newProductPrice;
+                        highestbids[i].innerHTML = $("#new-price").val();
                     }
                     highestbidder = $(".highest-bidder");
                     for (var i = 0; i < highestbidder.length; i++) {
@@ -160,6 +166,7 @@
                     }
                 })
 
+                //If the request fails (the bid is invalid)
                 .fail(function () {
                     error = $(".bid-error");
                     for(var i = 0; i < error.length; i++){

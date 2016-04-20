@@ -4,11 +4,10 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Created by Michael on 14.04.2016.
+ * This class represents an User of the Application
  */
 public class User {
 
-	private String username;
 	private double budget;
 	private int runningAuctions;
 	private int wonAuctions;
@@ -25,7 +24,6 @@ public class User {
 
 	public User(String email){
 		this.setEmail(email);
-		this.setUsername("John Doe");
 		this.setBudget(1500);
 		this.setRunningAuctions(0);
 		this.setWonAuctions(0);
@@ -38,14 +36,6 @@ public class User {
 
 	public void setAuctions(List<Product> auctions) {
 		this.auctions = auctions;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
 	}
 
 	public double getBudget() {
@@ -111,3 +101,4 @@ public class User {
 	}
 
 }
+

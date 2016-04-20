@@ -16,10 +16,6 @@
     <title>BIG Bid - Produkte</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="../styles/style.css">
-
-    <script src="/scripts/jquery.js"></script>
-    <script src="/scripts/framework.js"></script>
-    <script src="/scripts/WAScript.js"></script>
     <script>
         $(document).ready(function(){
             if(!supportsLocalStorage() || sessionStorage.length == 0){
@@ -154,8 +150,8 @@
 <footer>
     © 2016 BIG Bid
 </footer>
-
-
-
+<script src="/scripts/jquery.js"></script>
+<script src="/scripts/framework.js"></script>
+<script src="/scripts/WAScript.js"></script>
 </body>
 </html>
