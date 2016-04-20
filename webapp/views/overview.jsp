@@ -17,10 +17,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="../styles/style.css">
 
+    <script src="/scripts/jquery.js"></script>
+    <script src="/scripts/framework.js"></script>
+    <script src="/scripts/WAScript.js"></script>
+    <script>
+        $(document).ready(function(){
+            if(!supportsLocalStorage() || sessionStorage.length == 0){
+                console.log("hidden");
+                document.getElementById("lastSeenHeadlineOverview").className = "recently-viewed-headline";
+            } else{
+                console.log("show");
+                document.getElementById("lastSeenHeadlineOverview").className = "";
+            }
+        })
+    </script>
+
 </head>
 
 <input type="hidden" id="refreshed" value="no">
-<script type="text/javascript">
+<script>
     onload=function(){
         var e=document.getElementById("refreshed");
         if(e.value=="no")e.value="yes";
@@ -140,18 +155,7 @@
     © 2016 BIG Bid
 </footer>
 
-<script src="/scripts/jquery.js"></script>
-<script src="/scripts/framework.js"></script>
-<script src="/scripts/WAScript.js"></script>
-<script>
-    $(document).ready(function(){
-        if(!supportsLocalStorage() || sessionStorage.length == 0){
-            document.getElementById("lastSeenHeadlineOverview").className = "recently-viewed-headline";
-        } else{
-            document.getElementById("lastSeenHeadlineOverview").className = "";
-        }
-    })
-</script>
+
 
 </body>
 </html>

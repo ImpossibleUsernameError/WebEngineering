@@ -8,9 +8,18 @@
     <title>BIG Bid - <%= product.getName() %></title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="../styles/style.css">
+
+    <script src="/scripts/jquery.js"></script>
+    <script src="/scripts/framework.js"></script>
     <script src="/scripts/WAScript.js"></script>
 
     <script>
+        $(document).ready(function(){
+            var id = "<%= product.getId()%>";
+            var name = "<%= product.getName() %>";
+            window.sessionStorage.setItem(id, name);
+        });
+
         $(document).ready(function(){
             if(!supportsLocalStorage() || sessionStorage.length == 0){
                 document.getElementById("lastSeenHeadlineDetails").className = "recently-viewed-headline";
@@ -118,8 +127,8 @@
     © 2016 BIG Bid
 </footer>
 
-<script src="/scripts/jquery.js"></script>
-<script src="/scripts/framework.js"></script>
+
+
 <script type="text/javascript">
     $("#bid-form").submit(function (event) {
         event.preventDefault();

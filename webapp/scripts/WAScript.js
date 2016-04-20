@@ -13,6 +13,7 @@ function printProductOfStorageDetails() {
 }
 
 function prepareElementsForPrintProduct(parent){
+    console.log("aufgerufen");
     for(i = 0; i<sessionStorage.length;i++){
         var key = sessionStorage.key(i);
         var name = sessionStorage.getItem(key);
