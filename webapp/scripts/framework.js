@@ -107,7 +107,23 @@ function formatCurrency(x) {
 // change the URL.
 var socket = new WebSocket("ws://localhost:8080/socket");
 socket.onmessage = function (event) {
-
     /***  write your code here ***/
 
+
 };
+
+function bid(){
+    //WEBSOCKET
+    socket = new WebSocket("ws://localhost:8080/socket");
+
+    socket.onopen = function(evt) {
+        socket.send("text"); //TODO send
+    }
+
+    socket.onmessage = function(evt) {
+        window.alert("Message from Websocket received"); //TODO
+    }
+
+
+
+}

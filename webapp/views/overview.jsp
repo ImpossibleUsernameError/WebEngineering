@@ -8,6 +8,9 @@
 <!doctype html>
 <html lang="de">
 <head>
+    <script src="/scripts/jquery.js"></script>
+    <script src="/scripts/framework.js"></script>
+    <script src="/scripts/WAScript.js"></script>
     <meta charset="utf-8">
     <meta name="cache-control" content="no-cache" />
     <meta name="expires" content="0" />
@@ -26,6 +29,8 @@
                 document.getElementById("lastSeenHeadlineOverview").className = "";
             }
         })
+
+
     </script>
 
 </head>
@@ -37,6 +42,7 @@
         if(e.value=="no")e.value="yes";
         else{e.value="no";location.reload();}
     }
+
 </script>
 <body data-decimal-separator="," data-grouping-separator="." onload="printProductOfStorageOverview()">
 
@@ -150,8 +156,9 @@
 <footer>
     © 2016 BIG Bid
 </footer>
-<script src="/scripts/jquery.js"></script>
-<script src="/scripts/framework.js"></script>
-<script src="/scripts/WAScript.js"></script>
+
+<script>
+    bid();
+</script>
 </body>
 </html>
