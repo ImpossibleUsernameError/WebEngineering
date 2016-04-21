@@ -38,7 +38,7 @@
                 <dd id="user-name" class="user-name"><%= user.getEmail() %></dd>
                 <dt>Kontostand:</dt>
                 <dd>
-                    <span class="balance"><%= user.getBudget() %> </span> &#8364
+                    <span id="detail_bud" class="balance"><%= user.getBudget() %> </span> &#8364
                 </dd>
                 <dt>Laufend:</dt>
                 <dd>
@@ -88,8 +88,9 @@
                 </p>
                 <form id="bid-form" class="bid-form" action="">
                     <label class="bid-form-field" id="highest-price">
-                        <span class="highest-bid"><%=product.getPrice() %> </span> &#8364
-                        <span class="highest-bidder"><%=product.getMaxBidUser() %></span>
+                        <input type="hidden" id="detailID" value="<%=product.getId()%>">
+                        <span id="newPdetail" class="highest-bid"><%=product.getPrice() %> </span> &#8364
+                        <span id="maxBdetail" class="highest-bidder"><%=product.getMaxBidUser() %></span>
                     </label>
                     <label class="accessibility" for="new-price"></label>
                     <input type="number" step="0.01" min="0" id="new-price" class="bid-form-field form-input"
@@ -164,20 +165,14 @@
                     for(var i = 0; i < error.length; i++){
                         error[i].style.display = "none";
                     }
-                }, function() {
-                    socket = new WebSocket("ws://" + location.host + "/socket");
-
-                    socket.onopen = function (event) {
-                        socket.send("Text");
-                    }
-
-                    socket.onmessage = function (event) {
-                        window.alert("Message from Websocket reseived");
-                    }
+                }, function(data) {
 
                     socket.onerror = function (event) {
 
                     }
+
+                    var json = $.parseJSON(data);
+                    socket.send(JSON.stringify(json));
                 })
 
                 //If the request fails (the bid is invalid)

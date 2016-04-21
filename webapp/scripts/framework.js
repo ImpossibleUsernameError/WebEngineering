@@ -108,22 +108,46 @@ function formatCurrency(x) {
 var socket = new WebSocket("ws://localhost:8080/socket");
 socket.onmessage = function (event) {
     /***  write your code here ***/
-
-    window.alert("Message from Websocket reseived");
-
-};
-
-function bid(){
-    //WEBSOCKET
-    socket = new WebSocket("ws://localhost:8080/socket");
-
-    socket.onopen = function(evt) {
-        socket.send("text"); //TODO send
-    }
-
-    socket.onmessage = function(evt) {
-        window.alert("Message from Websocket received"); //TODO
-    }
     
 
-}
+    var mess = JSON.parse(event.data);
+    console.log("hiiii " + mess.budForOld+ " bbb");
+    console.log(mess.oldmaxbidder);
+    console.log(mess.currentUser);
+    if(mess.oldmaxbidder==mess.currentUser && mess.oldmaxbidder!="comUser"){
+        $("#detail_bud").html(mess.budForOld);
+
+
+    }
+    // var is Message for all for a new bid
+    var stringmessageForAll = "Der Benutzer "+mess.currentUser + " hat fuer das Produkt mit der ID "+mess.pid + " den Betrag "
+    +formatCurrency(mess.newProductPrice) + " geboten!";
+
+    // update the new price and bidder of detail site
+    if($("#detailID").val()==mess.pid){
+        $("#maxBdetail").html(mess.currentUser);
+        $("#newPdetail").html(mess.newProductPrice);
+    }
+
+    if($("#IDoverview").val()==mess.pid){
+
+        //$("#maxbidderOver").html(mess.currentUser);
+        //$("#priceOver").html(mess.newProductPrice);
+        console.log($("#IDoverview").val());
+        if($("#maxbidderOver")!=null){
+            console.log($("#maxbidderOver").val());
+            $("#maxbidderOver").html(mess.currentUser);
+        }
+
+        if($("#maxbidderOver")!=null){
+            console.log($("#priceOver").val());
+            $("#priceOver").html(mess.newProductPrice);
+        }
+    }
+
+    window.alert(stringmessageForAll);
+
+    
+};
+
+

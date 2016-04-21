@@ -40,6 +40,8 @@ public class BidServlet extends HttpServlet {
 		//Getting the product with the requested ID
 		Product p = ProductPool.getInstance().getProductById(request.getParameter("prodId"));
 		double oldPrice = p.getPrice();
+		String oldUser =p.getMaxBidUser();
+		double oldBud = Userpool.getInstance().getUser(oldUser).getBudget();
 
 		//If the new price is greater than the old one and the user has more budget than he would bid
 		if(newPrice > p.getPrice() && user != null && (user.getBudget() - newPrice) >= 0){
@@ -67,13 +69,17 @@ public class BidServlet extends HttpServlet {
 				user.setRunningAuctions(user.getRunningAuctions() + 1);
 			}
 
-			session.setAttribute("user", user);
-
 			//Creating json object for sending data back to the jsp page
+			double nva =oldBud+oldPrice;
+			String mail=user.getEmail();
 			JsonObject json = new JsonObject();
 			json.addProperty("newBudget", user.getBudget());
 			json.addProperty("newProductPrice", p.getPrice());
 			json.addProperty("runningAuctions", user.getRunningAuctions());
+			json.addProperty("oldmaxbidder",oldUser);
+			json.addProperty("budForOld", nva);
+			json.addProperty("currentUser",mail);
+			json.addProperty("pid",p.getId());
 
 			//Sending data back to jsp
 			response.getWriter().write(json.toString());

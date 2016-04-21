@@ -30,9 +30,7 @@ public class BigBidEndpoint {
     @OnMessage
     public void onMessage(Session session, String p)
     {
-
-        //TODO send
-        notifierService.send(session, p);
+        notifierService.send(p);
     }
 
     /**

@@ -22,7 +22,7 @@ public class Userpool {
 
 	public static Userpool getInstance(){
 		if(userPool == null){
-			return new Userpool();
+			userPool= new Userpool();
 		}
 		return userPool;
 	}

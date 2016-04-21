@@ -95,7 +95,7 @@
                 <div class="product-outer" data-product-id=<%= p.getId() %>>
                     <form id="form" class="form" action="DetailServlet?product=<% p.getId(); %>" method="get">
                         <input type="hidden" id="product" name="product" value=<%= p.getId()%>/>
-
+                        <input type="hidden" id="IDoverview" value="<%=p.getId()%>">
                         <a href="DetailServlet?product=<%= p.getId()%>"
 
                             <% if (!p.getExpiredTime().isAfter(LocalDateTime.now())) { %>
@@ -112,7 +112,7 @@
                                     <dd class="product-name"><%= p.getName() %></dd>
                                 <dt>Preis</dt>
                                     <% if(p.getPrice() != 0){ %>
-                                        <dd class="product-price">
+                                        <dd id="priceOver" class="product-price">
                                             <%= p.getPrice() %> &#8364
                                         </dd>
                                     <% } else { %>
@@ -129,7 +129,7 @@
                                         <% } %>
                                     class="product-time js-time-left"></dd>
                                 <dt>Höchstbietende /r</dt>
-                                <dd class="product-highest"><%= p.getMaxBidUser() %></dd>
+                                <dd id="maxbidderOver" class="product-highest"><%= p.getMaxBidUser() %></dd>
                             </dl>
                         </a>
                     </form>

@@ -42,7 +42,7 @@ public class NotifierService {
     }
 
 
-    public void send(Session session, String message){
+    public void send(String message){
 
         System.out.println(clients.keySet().size());
         for(Session ses : clients.keySet()){
