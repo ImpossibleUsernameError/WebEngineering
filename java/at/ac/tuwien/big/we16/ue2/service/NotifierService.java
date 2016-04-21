@@ -3,9 +3,7 @@ package at.ac.tuwien.big.we16.ue2.service;
 import javax.servlet.http.HttpSession;
 import javax.websocket.Session;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.*;
 
 public class NotifierService {
     private static Map<Session, HttpSession> clients = new ConcurrentHashMap<>();
@@ -41,5 +39,20 @@ public class NotifierService {
      */
     public void stop() {
         this.executor.shutdown();
+    }
+
+
+    public void send(Session session, String message){
+
+        System.out.println(clients.keySet().size());
+        for(Session ses : clients.keySet()){
+            executor.schedule(new Callable() {
+                public Object call() throws Exception{
+                    ses.getAsyncRemote().sendText(message);
+                    System.out.println("test");
+                    return "Called!";
+                }
+            }, 0, TimeUnit.SECONDS);
+        }
     }
 }

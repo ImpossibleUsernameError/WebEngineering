@@ -8,9 +8,7 @@
 <!doctype html>
 <html lang="de">
 <head>
-    <script src="/scripts/jquery.js"></script>
-    <script src="/scripts/framework.js"></script>
-    <script src="/scripts/WAScript.js"></script>
+
     <meta charset="utf-8">
     <meta name="cache-control" content="no-cache" />
     <meta name="expires" content="0" />
@@ -19,19 +17,6 @@
     <title>BIG Bid - Produkte</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="../styles/style.css">
-    <script>
-        $(document).ready(function(){
-            if(!supportsLocalStorage() || sessionStorage.length == 0){
-                console.log("hidden");
-                document.getElementById("lastSeenHeadlineOverview").className = "recently-viewed-headline";
-            } else{
-                console.log("show");
-                document.getElementById("lastSeenHeadlineOverview").className = "";
-            }
-        })
-
-
-    </script>
 
 </head>
 
@@ -157,8 +142,20 @@
     © 2016 BIG Bid
 </footer>
 
+<script src="/scripts/jquery.js"></script>
+<script src="/scripts/framework.js"></script>
+<script src="/scripts/WAScript.js"></script>
 <script>
-    bid();
+    $(document).ready(function(){
+        if(!supportsLocalStorage() || sessionStorage.length == 0){
+            console.log("hidden");
+            document.getElementById("lastSeenHeadlineOverview").className = "recently-viewed-headline";
+        } else{
+            console.log("show");
+            document.getElementById("lastSeenHeadlineOverview").className = "";
+        }
+    })
 </script>
+
 </body>
 </html>

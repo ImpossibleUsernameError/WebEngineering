@@ -164,6 +164,20 @@
                     for(var i = 0; i < error.length; i++){
                         error[i].style.display = "none";
                     }
+                }, function() {
+                    socket = new WebSocket("ws://" + location.host + "/socket");
+
+                    socket.onopen = function (event) {
+                        socket.send("Text");
+                    }
+
+                    socket.onmessage = function (event) {
+                        window.alert("Message from Websocket reseived");
+                    }
+
+                    socket.onerror = function (event) {
+
+                    }
                 })
 
                 //If the request fails (the bid is invalid)

@@ -109,6 +109,7 @@ var socket = new WebSocket("ws://localhost:8080/socket");
 socket.onmessage = function (event) {
     /***  write your code here ***/
 
+    window.alert("Message from Websocket reseived");
 
 };
 
@@ -123,7 +124,6 @@ function bid(){
     socket.onmessage = function(evt) {
         window.alert("Message from Websocket received"); //TODO
     }
-
-
+    
 
 }

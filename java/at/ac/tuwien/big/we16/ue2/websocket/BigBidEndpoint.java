@@ -28,12 +28,11 @@ public class BigBidEndpoint {
     }
 
     @OnMessage
-    public void onMessage(Session session, Product p)
+    public void onMessage(Session session, String p)
     {
-        System.out.println("Websocket received message");
 
         //TODO send
-        session.getAsyncRemote().sendText("response from websocket");
+        notifierService.send(session, p);
     }
 
     /**
