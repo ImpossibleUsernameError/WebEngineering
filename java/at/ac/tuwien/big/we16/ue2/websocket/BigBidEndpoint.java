@@ -28,7 +28,7 @@ public class BigBidEndpoint {
     }
 
     @OnMessage
-    public void onMessage(Session session, String p)
+    public void onMessage(String p)
     {
         notifierService.send(p);
     }

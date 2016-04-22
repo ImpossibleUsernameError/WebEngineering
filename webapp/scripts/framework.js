@@ -111,17 +111,16 @@ socket.onmessage = function (event) {
     
 
     var mess = JSON.parse(event.data);
-    console.log("hiiii " + mess.budForOld+ " bbb");
-    console.log(mess.oldmaxbidder);
-    console.log(mess.currentUser);
-    if(mess.oldmaxbidder==mess.currentUser && mess.oldmaxbidder!="comUser"){
+
+
+    /*if(mess.oldmaxbidder == mess.actualUser && mess.oldmaxbidder != "comUser"){
         $("#detail_bud").html(mess.budForOld);
-
-
-    }
+        console.log("alter maxbietender = jziger user");
+    }*/
+    
     // var is Message for all for a new bid
-    var stringmessageForAll = "Der Benutzer "+mess.currentUser + " hat fuer das Produkt mit der ID "+mess.pid + " den Betrag "
-    +formatCurrency(mess.newProductPrice) + " geboten!";
+    var stringmessageForAll = "Der Benutzer "+mess.currentUser + " hat fuer das Produkt mit der ID " + mess.pid + " den Betrag "
+    + mess.newProductPrice + " geboten!";
 
     // update the new price and bidder of detail site
     if($("#detailID").val()==mess.pid){
@@ -129,22 +128,22 @@ socket.onmessage = function (event) {
         $("#newPdetail").html(mess.newProductPrice);
     }
 
-    if($("#IDoverview").val()==mess.pid){
 
-        //$("#maxbidderOver").html(mess.currentUser);
-        //$("#priceOver").html(mess.newProductPrice);
-        console.log($("#IDoverview").val());
-        if($("#maxbidderOver")!=null){
-            console.log($("#maxbidderOver").val());
-            $("#maxbidderOver").html(mess.currentUser);
-        }
+    // update the new price and bidder of overview site
+    var maxBidder = "#maxbidderOver" + mess.pid;
+    var price = "#priceOver" + mess.pid;
 
-        if($("#maxbidderOver")!=null){
-            console.log($("#priceOver").val());
-            $("#priceOver").html(mess.newProductPrice);
-        }
+
+    if($(maxBidder)!=null){
+        $(maxBidder).html(mess.currentUser);
     }
 
+    if($(price)!=null){
+        $(price).html(mess.newProductPrice + " &#8364");
+    }
+
+
+    // notify all users of the new bid/bidder/price of a certain product
     window.alert(stringmessageForAll);
 
     

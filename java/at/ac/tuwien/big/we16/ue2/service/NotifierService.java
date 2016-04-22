@@ -44,9 +44,11 @@ public class NotifierService {
 
     public void send(String message){
 
-        System.out.println(clients.keySet().size());
+        ScheduledExecutorService exe = Executors.newSingleThreadScheduledExecutor();
+
         for(Session ses : clients.keySet()){
-            executor.schedule(new Callable() {
+
+            ScheduledFuture ex = exe.schedule(new Callable() {
                 public Object call() throws Exception{
                     ses.getAsyncRemote().sendText(message);
                     System.out.println("test");
@@ -54,5 +56,6 @@ public class NotifierService {
                 }
             }, 0, TimeUnit.SECONDS);
         }
+        exe.shutdown();
     }
 }

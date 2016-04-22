@@ -92,10 +92,11 @@
         <h2 class="main-headline" id="productsheadline">Produkte</h2>
         <div class="products">
             <% for(Product p : pool.getProducts()) { %>
+
                 <div class="product-outer" data-product-id=<%= p.getId() %>>
                     <form id="form" class="form" action="DetailServlet?product=<% p.getId(); %>" method="get">
-                        <input type="hidden" id="product" name="product" value=<%= p.getId()%>/>
-                        <input type="hidden" id="IDoverview" value="<%=p.getId()%>">
+                        <input type="hidden" name="product" value=<%= p.getId()%>/>
+
                         <a href="DetailServlet?product=<%= p.getId()%>"
 
                             <% if (!p.getExpiredTime().isAfter(LocalDateTime.now())) { %>
@@ -111,15 +112,15 @@
                                 <dt>Bezeichnung</dt>
                                     <dd class="product-name"><%= p.getName() %></dd>
                                 <dt>Preis</dt>
-                                    <% if(p.getPrice() != 0){ %>
-                                        <dd id="priceOver" class="product-price">
+                                    <!--<% //if(p.getPrice() != 0){ %> -->
+                                        <dd id="priceOver<%= p.getId() %>" class="product-price">
                                             <%= p.getPrice() %> &#8364
                                         </dd>
-                                    <% } else { %>
-                                        <dd style="text-align: center; flex-basis: 100%;">
+                                    <%// } else { %>
+                                        <!--<dd style="text-align: center; flex-basis: 100%;">
                                             Noch keine Gebote
-                                        </dd>
-                                    <% } %>
+                                        </dd>-->
+                                    <%// } %>
                                 <dt>Verbleibende Zeit</dt>
                                 <dd data-end-time="<%= p.getFormattedEndtime() %>"
                                         <% if (!p.getExpiredTime().isAfter(LocalDateTime.now())) { %>
@@ -129,7 +130,7 @@
                                         <% } %>
                                     class="product-time js-time-left"></dd>
                                 <dt>Höchstbietende /r</dt>
-                                <dd id="maxbidderOver" class="product-highest"><%= p.getMaxBidUser() %></dd>
+                                <dd id="maxbidderOver<%= p.getId() %>" class="product-highest"><%= p.getMaxBidUser() %></dd>
                             </dl>
                         </a>
                     </form>

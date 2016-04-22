@@ -167,11 +167,15 @@
                     }
                 }, function(data) {
 
-                    socket.onerror = function (event) {
+                    socket.onmessage = function(){
 
                     }
+                    socket.onerror = function (event) {
 
-                    var json = $.parseJSON(data);
+                    };
+
+                    var json = JSON.parse(data);
+
                     socket.send(JSON.stringify(json));
                 })
 

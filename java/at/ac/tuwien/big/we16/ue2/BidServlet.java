@@ -70,15 +70,15 @@ public class BidServlet extends HttpServlet {
 			}
 
 			//Creating json object for sending data back to the jsp page
-			double nva =oldBud+oldPrice;
-			String mail=user.getEmail();
+
+
 			JsonObject json = new JsonObject();
 			json.addProperty("newBudget", user.getBudget());
 			json.addProperty("newProductPrice", p.getPrice());
 			json.addProperty("runningAuctions", user.getRunningAuctions());
 			json.addProperty("oldmaxbidder",oldUser);
-			json.addProperty("budForOld", nva);
-			json.addProperty("currentUser",mail);
+			json.addProperty("budForOld", oldBud+oldPrice);
+			json.addProperty("currentUser",user.getEmail());
 			json.addProperty("pid",p.getId());
 
 			//Sending data back to jsp
