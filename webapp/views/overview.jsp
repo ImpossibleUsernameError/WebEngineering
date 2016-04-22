@@ -3,9 +3,8 @@
 
 <jsp:useBean id="user" class="at.ac.tuwien.big.we16.ue2.User" scope="session"/>
 
-<%! ProductPool pool = ProductPool.getInstance(); %>
-
 <!doctype html>
+<% System.out.println(ProductPool.getInstance().getProducts()); %>
 <html lang="de">
 <head>
 
@@ -91,7 +90,7 @@
     <main aria-labelledby="productsheadline">
         <h2 class="main-headline" id="productsheadline">Produkte</h2>
         <div class="products">
-            <% for(Product p : pool.getProducts()) { %>
+            <% for(Product p : ProductPool.getInstance().getProducts()) { %>
 
                 <div class="product-outer" data-product-id=<%= p.getId() %>>
                     <form id="form" class="form" action="DetailServlet?product=<% p.getId(); %>" method="get">

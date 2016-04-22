@@ -11,7 +11,7 @@ import javax.websocket.EndpointConfig;
  * Created by Marlene on 21.04.2016.
  */
 public class ProductDec implements Decoder.Text<Product> {
-    ProductPool productPool=ProductPool.getInstance();
+    ProductPool productPool = ProductPool.getInstance();
 
     @Override
     public Product decode(String s) throws DecodeException {

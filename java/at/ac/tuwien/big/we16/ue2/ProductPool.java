@@ -86,6 +86,7 @@ public class ProductPool {
 		for (Product p : expiredOnes) {
 			products.add(p);
 		}
+
 	}
 
 	public List<Product> getProducts() {

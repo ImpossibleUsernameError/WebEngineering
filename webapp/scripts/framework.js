@@ -112,47 +112,94 @@ socket.onmessage = function (event) {
 
     var mess = JSON.parse(event.data);
 
-    
-    // changes the budget of the old maxbidder in overview and detail and notifies him
-    if($("#user-name").html() == mess.oldmaxbidder){
-        // changes the display
-        $("#detailBudget").html(mess.budForOld);
-        $("#overviewBudget").html(mess.budForOld);
+    switch(mess.type) {
+        case "expiredAuction":
+            alert("auction expired");
+            //This isn't executed, maybe because the selector isn't correct
+            //But then i have no plan how to get dynamically created forms
+            //(document).getElementById(mess.productId).addClass("expired");
 
-        // notifies the old maxbidder
-        window.alert("Ihr Gebot beim Produkt " + mess.pid + " wurde ueberboten. Ihr Kontostand betraegt nun "
-        + mess.budForOld + " EUR.")
+            endtime = $(".product-time");
+            for (var i = 0; i < endtime.length; i++) {
+                endtime[i].setAttribute("data-end-text", "abgelaufen");
+                endtime[i].html = "abgelaufen";
+                endtime[i].style.display = "block";
+            }
+
+            //-----------All the below are executed-----------------------
+
+            runningAuctions = $(".running-auctions-count");
+            for (var i = 0; i < runningAuctions.length; i++) {
+                runningAuctions[i].innerHTML = mess.runningA;
+            }
+            balance = $(".balance");
+            for (var i = 0; i < runningAuctions.length; i++) {
+                balance[i].innerHTML = mess.budget;
+            }
+            wonAuctions = $(".won-auctions-count");
+            for (var i = 0; i < wonAuctions.length; i++) {
+                wonAuctions[i].innerHTML = mess.wonA;
+            }
+            lostAuctions = $(".lost-auctions-count");
+            for (var i = 0; i < lostAuctions.length; i++) {
+                lostAuctions[i].innerHTML = mess.lostA;
+            }
+            detailTime = $(".detail-time");
+            for (var i = 0; i < detailTime.length; i++) {
+                detailTime[i].style.display = "none";
+            }
+            
+            //isn't executed
+            (document).getElementById("bid-form").style.display = "none";
+
+            //-------------------------------------------------------------
+
+            //This isn't executed, i don't know why
+            //document.getElementById("exptext").style.display = "block";
+            break;
+        
+        case "newbid":
+            // changes the budget of the old maxbidder in overview and detail and notifies him
+            if ($("#user-name").html() == mess.oldmaxbidder) {
+                // changes the display
+                $("#detailBudget").html(mess.budForOld);
+                $("#overviewBudget").html(mess.budForOld);
+
+                // notifies the old maxbidder
+                window.alert("Ihr Gebot beim Produkt " + mess.pid + " wurde ueberboten. Ihr Kontostand betraegt nun "
+                    + mess.budForOld + " EUR.")
+            }
+
+
+            // var is Message for all for a new bid
+            var stringmessageForAll = "Der Benutzer " + mess.currentUser + " hat fuer das Produkt mit der ID " + mess.pid + " den Betrag "
+                + mess.newProductPrice + " EUR geboten!";
+
+            // update the new price and bidder of detail site
+            if ($("#detailID").val() == mess.pid) {
+                $("#maxBdetail").html(mess.currentUser);
+                $("#newPdetail").html(mess.newProductPrice);
+            }
+
+
+            // update the new price and bidder of overview site
+            var maxBidder = "#maxbidderOver" + mess.pid;
+            var price = "#priceOver" + mess.pid;
+
+
+            if ($(maxBidder) != null) {
+                $(maxBidder).html(mess.currentUser);
+            }
+
+            if ($(price) != null) {
+                $(price).html(mess.newProductPrice + " &#8364");
+            }
+
+
+            // notify all users of the new bid/bidder/price of a certain product
+            window.alert(stringmessageForAll);
+            break;
     }
-
-
-    // var is Message for all for a new bid
-    var stringmessageForAll = "Der Benutzer "+mess.currentUser + " hat fuer das Produkt mit der ID " + mess.pid + " den Betrag "
-    + mess.newProductPrice + " EUR geboten!";
-
-    // update the new price and bidder of detail site
-    if($("#detailID").val()==mess.pid){
-        $("#maxBdetail").html(mess.currentUser);
-        $("#newPdetail").html(mess.newProductPrice);
-    }
-
-
-    // update the new price and bidder of overview site
-    var maxBidder = "#maxbidderOver" + mess.pid;
-    var price = "#priceOver" + mess.pid;
-
-
-    if($(maxBidder)!=null){
-        $(maxBidder).html(mess.currentUser);
-    }
-
-    if($(price)!=null){
-        $(price).html(mess.newProductPrice + " &#8364");
-    }
-
-
-    // notify all users of the new bid/bidder/price of a certain product
-    window.alert(stringmessageForAll);
-
     
 };
 
