@@ -4,7 +4,6 @@
 <jsp:useBean id="user" class="at.ac.tuwien.big.we16.ue2.User" scope="session"/>
 
 <!doctype html>
-<% System.out.println(ProductPool.getInstance().getProducts()); %>
 <html lang="de">
 <head>
 

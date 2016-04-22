@@ -76,9 +76,6 @@ public class NotifierService {
 
                             //Send message with user specific data
                             sendToClient(getSocketSessionByUser(u), msg.toString());
-                            System.out.println();
-                            System.out.println("sent: " + msg);
-                            System.out.println();
                         }
                     }
                 }
@@ -118,8 +115,12 @@ public class NotifierService {
      * @param s   The session of the user
      * @param msg The message to be sent
      */
-    public void sendToClient(Session s, String msg) {
+    public static void sendToClient(Session s, String msg) {
         s.getAsyncRemote().sendText(msg);
+    }
+
+    public static void sendToClient(User user, String msg){
+        sendToClient(getSocketSessionByUser(user), msg);
     }
 
     /**
@@ -127,10 +128,13 @@ public class NotifierService {
      *
      * @param message The message
      */
-    public void sendToAll(String message) {
-
+    public static void sendToAll(String message) {
         for (Session ses : clients.keySet()) {
-            sendToClient(ses, message);
+            String email = ((User)clients.get(ses).getAttribute("user")).getEmail();
+            System.out.println("SendingToAll: send to "  + email);
+            if(email != null && !email.equals("") && !email.equals("comUser")) {
+                sendToClient(ses, message);
+            }
         }
     }
 
