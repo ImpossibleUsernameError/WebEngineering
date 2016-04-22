@@ -54,10 +54,10 @@
             <h2 class="accessibility" id="userinfoheadline">Benutzerdaten</h2>
             <dl class="user-data properties">
                 <dt class="accessibility">Name:</dt>
-                <dd class="user-name"><%= user.getEmail() %></dd>
+                <dd id="user-name" class="user-name"><%= user.getEmail() %></dd>
                 <dt>Kontostand:</dt>
                 <dd>
-                    <span class="balance"><%= user.getBudget() %> &#8364</span>
+                    <span id="overviewBudget" class="balance"><%= user.getBudget() %></span> &#8364
                 </dd>
                 <dt>Laufend:</dt>
                 <dd>

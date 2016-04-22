@@ -76,10 +76,10 @@ public class BidServlet extends HttpServlet {
 			json.addProperty("newBudget", user.getBudget());
 			json.addProperty("newProductPrice", p.getPrice());
 			json.addProperty("runningAuctions", user.getRunningAuctions());
-			json.addProperty("oldmaxbidder",oldUser);
+			json.addProperty("oldmaxbidder", oldUser);
 			json.addProperty("budForOld", oldBud+oldPrice);
-			json.addProperty("currentUser",user.getEmail());
-			json.addProperty("pid",p.getId());
+			json.addProperty("currentUser", user.getEmail());
+			json.addProperty("pid", p.getId());
 
 			//Sending data back to jsp
 			response.getWriter().write(json.toString());

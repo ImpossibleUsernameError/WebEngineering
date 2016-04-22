@@ -112,15 +112,22 @@ socket.onmessage = function (event) {
 
     var mess = JSON.parse(event.data);
 
-
-    /*if(mess.oldmaxbidder == mess.actualUser && mess.oldmaxbidder != "comUser"){
-        $("#detail_bud").html(mess.budForOld);
-        console.log("alter maxbietender = jziger user");
-    }*/
     
+    // changes the budget of the old maxbidder in overview and detail and notifies him
+    if($("#user-name").html() == mess.oldmaxbidder){
+        // changes the display
+        $("#detailBudget").html(mess.budForOld);
+        $("#overviewBudget").html(mess.budForOld);
+
+        // notifies the old maxbidder
+        window.alert("Ihr Gebot beim Produkt " + mess.pid + " wurde ueberboten. Ihr Kontostand betraegt nun "
+        + mess.budForOld + " EUR.")
+    }
+
+
     // var is Message for all for a new bid
     var stringmessageForAll = "Der Benutzer "+mess.currentUser + " hat fuer das Produkt mit der ID " + mess.pid + " den Betrag "
-    + mess.newProductPrice + " geboten!";
+    + mess.newProductPrice + " EUR geboten!";
 
     // update the new price and bidder of detail site
     if($("#detailID").val()==mess.pid){

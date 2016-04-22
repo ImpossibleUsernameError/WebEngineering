@@ -38,7 +38,7 @@
                 <dd id="user-name" class="user-name"><%= user.getEmail() %></dd>
                 <dt>Kontostand:</dt>
                 <dd>
-                    <span id="detail_bud" class="balance"><%= user.getBudget() %> </span> &#8364
+                    <span id="detailBudget" class="balance"><%= user.getBudget() %></span> &#8364
                 </dd>
                 <dt>Laufend:</dt>
                 <dd>
@@ -167,9 +167,7 @@
                     }
                 }, function(data) {
 
-                    socket.onmessage = function(){
 
-                    }
                     socket.onerror = function (event) {
 
                     };
