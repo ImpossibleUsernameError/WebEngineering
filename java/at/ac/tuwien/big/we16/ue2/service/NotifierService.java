@@ -71,6 +71,8 @@ public class NotifierService {
                             msg.addProperty("runningA", u.getRunningAuctions());
                             msg.addProperty("wonA", u.getWonAuctions());
                             msg.addProperty("lostA", u.getLostAuctions());
+                            msg.addProperty("soldFor", product.getPrice());
+                            msg.addProperty("maxBidder", product.getMaxBidUser());
 
                             //Send message with user specific data
                             sendToClient(getSocketSessionByUser(u), msg.toString());

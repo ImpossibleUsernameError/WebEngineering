@@ -148,10 +148,8 @@
 <script>
     $(document).ready(function(){
         if(!supportsLocalStorage() || sessionStorage.length == 0){
-            console.log("hidden");
             document.getElementById("lastSeenHeadlineOverview").className = "recently-viewed-headline";
         } else{
-            console.log("show");
             document.getElementById("lastSeenHeadlineOverview").className = "";
         }
     })

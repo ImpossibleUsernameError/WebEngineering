@@ -114,7 +114,7 @@ socket.onmessage = function (event) {
 
     switch(mess.type) {
         case "expiredAuction":
-            alert("auction expired");
+
             //This isn't executed, maybe because the selector isn't correct
             //But then i have no plan how to get dynamically created forms
             //(document).getElementById(mess.productId).addClass("expired");
@@ -156,6 +156,22 @@ socket.onmessage = function (event) {
 
             //This isn't executed, i don't know why
             //document.getElementById("exptext").style.display = "block";
+            
+            var parentProductDetails = document.getElementById("productDetails");
+            
+            var divChildH2 = document.createElement("div");
+            divChildH2.className = "auction-expired-text";
+            
+            var pChildDiv = document.createElement("p");
+            pChildDiv.innerHTML = "Diese Auktion ist bereits abgelaufen. Das Produkt wurde um " +
+                "<span class=\"highest-bid\">" + mess.soldFor + "</span> &#8364 an <span class=\"highest-bidder\"> " + 
+                mess.maxBidder + "</span> verkauft."
+            
+            divChildH2.appendChild(pChildDiv);
+            parentProductDetails.appendChild(divChildH2);
+
+
+            alert("auction expired");
             break;
         
         case "newbid":

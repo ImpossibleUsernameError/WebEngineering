@@ -67,7 +67,7 @@
         <div class="details-image-container">
             <img class="details-image" src="../images/<%= product.getImg()%>" alt="">
         </div>
-        <div data-product-id="<%= product.getId()%>" class="details-data">
+        <div id="productDetails" data-product-id="<%= product.getId()%>" class="details-data">
             <h2 class="main-headline" id="productheadline"><%= product.getName()%> (<%= product.getCategory()%>)</h2>
             <% if (!product.getExpiredTime().isAfter(LocalDateTime.now())) { %>
                 <div class="auction-expired-text">
