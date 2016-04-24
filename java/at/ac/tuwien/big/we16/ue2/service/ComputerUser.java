@@ -42,7 +42,6 @@ public class ComputerUser implements ServletContextListener {
 		executor.scheduleAtFixedRate(new Runnable() {
 			@Override
 			public void run() {
-				System.out.println("new iteration");
 				for(Product p : ProductPool.getInstance().getProducts()){
 					double random = Math.random();
 					//The random number is with the probability of 30% smaller than 0.3
@@ -51,7 +50,6 @@ public class ComputerUser implements ServletContextListener {
 
 						//Register the current max bidder, because we have to notify him, that he was overbidden
 						User userToNotify = Userpool.getInstance().getUser(p.getMaxBidUser());
-						System.out.println("user to notify: " + userToNotify);
 
 						//Create new json message to send
 						JsonObject json = new JsonObject();
@@ -82,11 +80,9 @@ public class ComputerUser implements ServletContextListener {
 						json.addProperty("type", "newbid");
 						json.addProperty("newProductPrice", p.getPrice());
 						json.addProperty("currentUser", user.getEmail());
-						System.out.println("sendin to all");
 
 						//Sending message with new bid to all users
 						NotifierService.sendToAll(json.toString());
-						System.out.println("sent to all");
 					}
 				}
 			}

@@ -186,10 +186,6 @@ socket.onmessage = function (event) {
             break;
         
         case "newbid":
-            
-            // var is Message for all for a new bid
-            var stringmessageForAll = "Der Benutzer " + mess.currentUser + " hat fuer das Produkt mit der ID " + mess.pid + " den Betrag "
-                + mess.newProductPrice + " EUR geboten!";
 
             // update the new price and bidder of detail site
             if ($("#detailID").val() == mess.pid) {
@@ -210,10 +206,6 @@ socket.onmessage = function (event) {
             if ($(price) != null) {
                 $(price).html(mess.newProductPrice + " &#8364");
             }
-
-
-            // notify all users of the new bid/bidder/price of a certain product
-            window.alert(stringmessageForAll);
             break;
     }
     

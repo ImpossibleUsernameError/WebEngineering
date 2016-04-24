@@ -179,7 +179,6 @@
 
                 //If the request fails (the bid is invalid)
                 .fail(function () {
-                    alert("fail");
                     error = $(".bid-error");
                     for(var i = 0; i < error.length; i++){
                         error[i].style.display = "block";
