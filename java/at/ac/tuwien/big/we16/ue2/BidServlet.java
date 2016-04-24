@@ -31,7 +31,7 @@ public class BidServlet extends HttpServlet {
 	 */
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(true);
 		User user = (User) session.getAttribute("user");
 
 		//Getting the new price from the request

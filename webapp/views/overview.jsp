@@ -105,7 +105,7 @@
 
                             title="Mehr Informationen zu <%= p.getName() %>">
 
-                            <img class="product-image" src="../images/<%= p.getImg() %>" alt="<%= p.getName() %>">
+                            <img class="product-image" alt="<%= p.getName() %>" src="../images/<%= p.getImg() %>" alt="<%= p.getName() %>">
                             <dl class="product-properties properties">
                                 <dt>Bezeichnung</dt>
                                     <dd class="product-name"><%= p.getName() %></dd>

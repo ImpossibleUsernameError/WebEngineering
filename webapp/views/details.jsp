@@ -65,7 +65,7 @@
     </aside>
     <main aria-labelledby="productheadline" class="details-container">
         <div class="details-image-container">
-            <img class="details-image" src="../images/<%= product.getImg()%>" alt="">
+            <img class="details-image" src="../images/<%= product.getImg()%>" alt="<%= product.getName() %>">
         </div>
         <div id="productDetails" data-product-id="<%= product.getId()%>" class="details-data">
             <h2 class="main-headline" id="productheadline"><%= product.getName()%> (<%= product.getCategory()%>)</h2>
